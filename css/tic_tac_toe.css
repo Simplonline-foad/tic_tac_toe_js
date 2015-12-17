@@ -54,6 +54,27 @@ h1{
   margin-top: 25px;
 }
 
+h2{
+  text-align: center;
+  color: green;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+h3{
+  text-align: center;
+  color: blue;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+h4{
+  text-align: center;
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 #intel_board{
   display: block;
   height: 100px;
@@ -120,4 +141,11 @@ i{
 
 .fa-circle-o{
   color: blue;
+}
+
+button{
+  display: block;
+  width: 100px;
+  height: 50px;
+  margin: 30px auto;
 }
