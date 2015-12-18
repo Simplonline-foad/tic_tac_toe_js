@@ -32,23 +32,34 @@ $cross.classList.add('fa');
 $cross.classList.add('fa-times');
 
 var $circle = document.createElement('i');
-$cross.classList.add('fa');
-$cross.classList.add('fa-circle-o');
+$circle.classList.add('fa');
+$circle.classList.add('fa-circle-o');
 
 
 // variables logiques //
 var game_started = false;
 var game_ended = true;
 var count = 1;
+var current_player;
 
 
 
 //fonctions //
 
+function add_a_cross(e){
+  e.target.appendChild($cross.cloneNode());
+}
+
+function add_a_cicle(e){
+  e.target.appendChild($circle.cloneNode());
+}
+
 function announce_player(){
   if(count % 2 == 0){
+    current_player = 2;
     $intel_board.innerHTML = "<h3> Tour du Joueur 2 ! </h3>";
   }else{
+    current_player = 1;
     $intel_board.innerHTML = "<h2> Tour du Joueur 1 ! </h2>";
   }
 }
@@ -61,19 +72,27 @@ function start() {
   game_started = true;
   game_ended = false;
   console.log('la partie est lancé !')
+  current_player = 1;
   announce_player();
 }
 
-function play(){
+function play(e){
+
   if (game_started){
     count++;
-    if(count > col_array.length){
+    if(count > col_array.length + 1){
       game_started = false;
       game_ended = true;
       announce_partie_ended()
       console.log('la partie est finie!');
       } else {
         // here you play //
+        if(current_player == 1){
+          console.log(e.target);
+          add_a_cross(e);
+        } else {
+          add_a_cicle(e);
+        }
         announce_player();
         console.log(count);
       }
