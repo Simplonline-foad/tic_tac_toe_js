@@ -75,6 +75,13 @@ h4{
   font-weight: bold;
 }
 
+h5{
+	text-align: center;
+  color: green;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 #intel_board{
   display: block;
   height: 100px;
@@ -141,6 +148,22 @@ i{
 
 .fa-circle-o{
   color: blue;
+}
+
+#player1_victory{
+	position: relative;
+	float: left;
+	width: 200px;
+	height: 200px;
+	border: 1px solid black;
+}
+
+#player2_victory{
+	position: relative;
+	float: right;
+	width: 200px;
+	height: 200px;
+	border: 1px solid black;
 }
 
 button{

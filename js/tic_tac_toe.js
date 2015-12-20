@@ -6,7 +6,10 @@ var getById = function(id){
 
 // variables d'accès //
 var $intel_board = getById("intel_board");
+var $player_board = getById("player_board");
 var $game_board = getById("game_board");
+var $player1_victory = getById("player1_victory");
+var $player2_victory = getById("player2_victory");
 
 var $row_1 = getById("row_1");
 var $row_2 = getById("row_2");
@@ -40,11 +43,39 @@ $circle.classList.add('fa-circle-o');
 var game_started = false;
 var game_ended = true;
 var count = 1;
+var player1_victory = 0;
+var player2_victory = 0;
 var current_player;
 var winner = 0;
 
 
 //fonctions //
+function announce_player(){
+  if(count % 2 == 0){
+    current_player = 2;
+    $player_board.innerHTML = "<h3> Tour du Joueur 2 ! </h3>";
+  }else{
+    current_player = 1;
+    $player_board.innerHTML = "<h2> Tour du Joueur 1 ! </h2>";
+  }
+}
+
+function announce_winner(){
+  $intel_board.innerHTML= "<h5>Le joueur " + winner + " gagne la partie ! </h5>";
+  if(winner == 1){
+    player1_victory++;
+    $player1_victory.innerHTML = player1_victory;
+  }else if(winner == 2){
+    player2_victory++;
+    $player2_victory.innerHTML = player2_victory;
+  }
+}
+
+function announce_partie_ended(){
+  $intel_board.innerHTML += "<h4> La partie est finie !! </h4>";
+  count = 1;
+}
+
 
 function check_rows(){
   if ($col_1.hasChildNodes() && $col_2.hasChildNodes() && $col_3.hasChildNodes()){
@@ -53,6 +84,8 @@ function check_rows(){
       $col_1.style.backgroundColor = "lightgreen";
       $col_2.style.backgroundColor = "lightgreen";
       $col_3.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
   if ($col_4.hasChildNodes() && $col_5.hasChildNodes() && $col_6.hasChildNodes()){
@@ -61,6 +94,8 @@ function check_rows(){
       $col_4.style.backgroundColor = "lightgreen";
       $col_5.style.backgroundColor = "lightgreen";
       $col_6.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
   if ($col_7.hasChildNodes() && $col_8.hasChildNodes() && $col_9.hasChildNodes()){
@@ -69,6 +104,8 @@ function check_rows(){
       $col_7.style.backgroundColor = "lightgreen";
       $col_8.style.backgroundColor = "lightgreen";
       $col_9.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
 }
@@ -80,6 +117,8 @@ function check_cols(){
       $col_1.style.backgroundColor = "lightgreen";
       $col_4.style.backgroundColor = "lightgreen";
       $col_7.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
   if ($col_2.hasChildNodes() && $col_5.hasChildNodes() && $col_8.hasChildNodes()){
@@ -88,6 +127,8 @@ function check_cols(){
       $col_2.style.backgroundColor = "lightgreen";
       $col_5.style.backgroundColor = "lightgreen";
       $col_8.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
   if ($col_3.hasChildNodes() && $col_6.hasChildNodes() && $col_9.hasChildNodes()){
@@ -96,6 +137,8 @@ function check_cols(){
       $col_3.style.backgroundColor = "lightgreen";
       $col_6.style.backgroundColor = "lightgreen";
       $col_9.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
 }
@@ -107,6 +150,8 @@ function check_diags(){
       $col_1.style.backgroundColor = "lightgreen";
       $col_5.style.backgroundColor = "lightgreen";
       $col_9.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
   if ($col_3.hasChildNodes() && $col_5.hasChildNodes() && $col_7.hasChildNodes()){
@@ -115,8 +160,18 @@ function check_diags(){
       $col_3.style.backgroundColor = "lightgreen";
       $col_5.style.backgroundColor = "lightgreen";
       $col_7.style.backgroundColor = "lightgreen";
+      announce_winner();
+      end();
     }
   }
+}
+
+function end(){
+  game_started = false;
+  game_ended = true;
+  count = 1;
+  announce_partie_ended()
+  console.log('la partie est finie!');
 }
 
 function reset_grid(){
@@ -135,6 +190,9 @@ function add_a_cross(e){
 
   if(e.target.hasChildNodes() == false){
     e.target.appendChild($cross.cloneNode());
+    check_rows();
+    check_cols();
+    check_diags();
     count++;
   }else{
     $intel_board.innerHTML = "<h4> Cette case a déjà été jouée </h4>"
@@ -144,44 +202,16 @@ function add_a_cross(e){
 function add_a_cicle(e){
   if(e.target.hasChildNodes() == false){
     e.target.appendChild($circle.cloneNode());
+    check_rows();
+    check_cols();
+    check_diags();
     count++;
   }else {
     $intel_board.innerHTML = "<h4> Cette case a déjà été jouée </h4>"
   }
 }
 
-function announce_player(){
-  if(count % 2 == 0){
-    current_player = 2;
-    $intel_board.innerHTML = "<h3> Tour du Joueur 2 ! </h3>";
-  }else{
-    current_player = 1;
-    $intel_board.innerHTML = "<h2> Tour du Joueur 1 ! </h2>";
-  }
-}
 
-function announce_partie_ended(){
-  $intel_board.innerHTML = "<h4> La partie est finie !! </h4>";
-  count = 1;
-}
-
-function start() {
-  reset_grid();
-  count = 1;
-  game_started = true;
-  game_ended = false;
-  console.log('la partie est lancé !')
-  current_player = 1;
-  announce_player();
-}
-
-function end(){
-  game_started = false;
-  game_ended = true;
-  count = 1;
-  announce_partie_ended()
-  console.log('la partie est finie!');
-}
 
 function play(e){
   if (game_started){
@@ -192,17 +222,16 @@ function play(e){
       } else {
         // here you play //
         if(current_player == 1){
-          console.log(e.target);
           add_a_cross(e);
         } else {
           add_a_cicle(e);
         }
-        announce_player();
-        console.log(count);
+        if(game_ended == false){
+          announce_player();
+        }else{
+          player_board.innerHTML = "";
+        }
       }
-      check_rows();
-      check_cols();
-      check_diags();
     }else{
       $intel_board.innerHTML = "<h4> Aucune partie en cours, cliquez sur 'commencer' ! </h4>"
       console.log('Aucune partie en cours.');
@@ -213,8 +242,21 @@ function play(e){
 
 // events //
 
-for (i = 0; i < col_array.length; i++){
-  col_array[i].addEventListener('click', play, false);
+function add_grid_events(){
+  for (i = 0; i < col_array.length; i++){
+    col_array[i].addEventListener('click', play, false);
+  }
+}
+
+function start() {
+  reset_grid();
+  add_grid_events();
+  count = 1;
+  game_started = true;
+  game_ended = false;
+  console.log('la partie est lancé !')
+  current_player = 1;
+  announce_player();
 }
 
 $btn.addEventListener('click', start, false);
