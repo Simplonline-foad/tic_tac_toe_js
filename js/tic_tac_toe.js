@@ -188,7 +188,7 @@ function reset_grid(){
 
 function add_a_cross(e){
 
-  if(e.target.hasChildNodes() == false){
+  if(e.target.hasChildNodes() == false && (e.target.className !== "fa fa-times" && e.target.className !== "fa fa-circle-o")){
     e.target.appendChild($cross.cloneNode());
     check_rows();
     check_cols();
@@ -200,7 +200,7 @@ function add_a_cross(e){
 }
 
 function add_a_cicle(e){
-  if(e.target.hasChildNodes() == false){
+  if(e.target.hasChildNodes() == false && (e.target.className != "fa fa-times" && e.target.className != "fa fa-circle-o")){
     e.target.appendChild($circle.cloneNode());
     check_rows();
     check_cols();
