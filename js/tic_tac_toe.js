@@ -61,18 +61,21 @@ function announce_player(){
 }
 
 function announce_winner(){
-  $intel_board.innerHTML= "<h5>Le joueur " + winner + " gagne la partie ! </h5>";
-  if(winner == 1){
+  if(winner == 0){
+    $intel_board.innerHTML= "<h5>Egalité, pas de gagnant ! </h5>";
+  }else if(winner == 1){
     player1_victory++;
     $player1_victory.innerHTML = player1_victory;
+    $intel_board.innerHTML= "<h5>Le joueur " + winner + " gagne la partie ! </h5>";
   }else if(winner == 2){
     player2_victory++;
     $player2_victory.innerHTML = player2_victory;
+    $intel_board.innerHTML= "<h5>Le joueur " + winner + " gagne la partie ! </h5>";
   }
 }
 
 function announce_partie_ended(){
-  $intel_board.innerHTML += "<h4> La partie est finie !! </h4>";
+  $intel_board.innerHTML = "<h4> La partie est finie !! </h4>";
   count = 1;
 }
 
@@ -169,6 +172,7 @@ function check_diags(){
 function end(){
   game_started = false;
   game_ended = true;
+  current_player = null;
   count = 1;
   announce_partie_ended()
   console.log('la partie est finie!');
@@ -219,6 +223,7 @@ function play(e){
     if(count > col_array.length - 1){
         add_a_cross(e);
         end();
+        announce_winner();
       } else {
         // here you play //
         if(current_player == 1){
@@ -252,6 +257,7 @@ function start() {
   reset_grid();
   add_grid_events();
   count = 1;
+  winner = 0;
   game_started = true;
   game_ended = false;
   console.log('la partie est lancé !')

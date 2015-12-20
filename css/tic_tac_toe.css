@@ -59,6 +59,7 @@ h2{
   color: green;
   font-size: 20px;
   font-weight: bold;
+	margin-top: 20px;
 }
 
 h3{
@@ -66,6 +67,7 @@ h3{
   color: blue;
   font-size: 20px;
   font-weight: bold;
+	margin-top: 20px;
 }
 
 h4{
@@ -73,6 +75,7 @@ h4{
   color: red;
   font-size: 20px;
   font-weight: bold;
+	margin-top: 20px;
 }
 
 h5{
@@ -80,11 +83,12 @@ h5{
   color: green;
   font-size: 20px;
   font-weight: bold;
+	margin-top: 20px;
 }
 
 #intel_board{
   display: block;
-  height: 100px;
+  height: 60px;
 }
 
 
